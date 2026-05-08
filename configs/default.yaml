@@ -1,0 +1,27 @@
+input:
+  lq_dir: ./data/LQ
+  hr_dir: ./data/HR
+  exts: [".png", ".jpg", ".jpeg", ".webp"]
+
+output:
+  out_dir: ./output
+  save_crop: true
+  save_cutout: false
+  save_mask: false
+  save_overlay: false
+
+prompts:
+  labels: [face, bird, plant, texture]
+  label_mode: single
+  score_threshold: 0.25
+
+pairing:
+  expected_scale: 2.0
+  scale_tolerance: 0.05
+  skip_scale_mismatch: true
+
+model:
+  backend: dummy
+  proposal_provider: none
+  checkpoint: ""
+  device: cpu
