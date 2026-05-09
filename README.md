@@ -226,6 +226,17 @@ flowchart LR
 python -m pip install -e .[dev]
 ```
 
+For a new Windows machine that needs the full SAM3 backend, use the setup script after cloning both repositories:
+
+```powershell
+git clone https://github.com/KumiXH/sam3-mask.git
+git clone https://github.com/facebookresearch/sam3.git
+cd sam3-mask
+powershell -ExecutionPolicy Bypass -File .\scripts\setup_sam3_env.ps1 -Python python -Sam3RepoDir ..\sam3
+```
+
+This script explicitly installs `setuptools<70.0.0` because newer `setuptools` versions can break the official `sam3` import path with `No module named pkg_resources`.
+
 For quick source-tree execution without installing, use:
 
 ```powershell
@@ -291,6 +302,32 @@ After installing the SAM3 dependency stack and placing a local checkpoint, run s
 ```powershell
 python -m sam3_mask.main --config configs/SR_HR_.yaml
 python -m sam3_mask.main --config configs/SR_HR_crop.yaml
+```
+
+### Manual Environment Fixes
+
+If a fresh machine reports:
+
+```text
+SAM3 backend is not available in this environment
+```
+
+or a direct SAM3 import reports:
+
+```text
+No module named pkg_resources
+```
+
+install or downgrade `setuptools` first:
+
+```powershell
+python -m pip install "setuptools<70.0.0"
+```
+
+Then verify the official SAM3 imports:
+
+```powershell
+python -c "import pkg_resources; from sam3.model_builder import build_sam3_image_model; from sam3.model.sam3_image_processor import Sam3Processor; print('ok')"
 ```
 
 ## Example Configs
