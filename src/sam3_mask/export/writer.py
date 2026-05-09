@@ -38,6 +38,19 @@ def export_mask(mask: np.ndarray, out_path: Path) -> None:
     Image.fromarray(mask.astype("uint8") * 255).save(out_path)
 
 
+def export_single_channel_mask(mask: np.ndarray, out_path: Path) -> None:
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    image = Image.fromarray(mask.astype("uint8") * 255)
+    image.save(out_path)
+
+
+def export_mask_crop(mask: np.ndarray, box: Box, out_path: Path) -> None:
+    x, y, w, h = box
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    image = Image.fromarray(mask.astype("uint8") * 255)
+    image.crop((x, y, x + w, y + h)).save(out_path)
+
+
 def append_jsonl_record(out_path: Path, record: dict) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("a", encoding="utf-8") as handle:

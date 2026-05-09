@@ -1,8 +1,13 @@
 # sam3-mask
 
-Prompt-driven object crop extraction for paired super-resolution datasets.
+Prompt-driven mask and crop extraction for paired super-resolution datasets.
 
-The first runnable version uses a local `dummy` backend for CPU-friendly Windows development and keeps a guarded `SAM3` backend hook for later Linux/V100 execution.
+The project now supports a two-stage dataset workflow on paired `LQ/HR` images:
+
+1. Stage 1 writes one aggregate single-channel mask per `(image, label)` under `output/masks/...`
+2. Stage 2 reads the saved masks and exports fixed-size `HR/LQ/mask` crops under `output/crops/...`
+
+Multiple detected instances for the same label are merged into one mask. If nothing is detected for a label, an empty mask is still saved.
 
 ## Requirements
 
@@ -19,7 +24,7 @@ For quick source-tree execution without installing, use:
 
 ```powershell
 $env:PYTHONPATH = "src"
-python -m sam3_mask.main --config configs/default.yaml --backend dummy
+python -m sam3_mask.main --config configs/default.yaml
 ```
 
 ## Config
@@ -29,57 +34,73 @@ The default runtime config lives at `configs/default.yaml`.
 Important options:
 
 - `input.lq_dir` and `input.hr_dir`: paired dataset roots
-- `prompts.labels`: text prompts such as `face`, `bird`, `plant`, `texture`
-- `output.save_crop`, `output.save_cutout`, `output.save_mask`: export toggles
+- `prompts.labels`: label prompts such as `face`, `plant`, `architecture`
+- `pipeline.stage`: `mask` or `crop`
+- `crop.hr_crop_size`: fixed HR crop size, default `480`
 - `pairing.expected_scale`: expected HR/LQ scale, default `2.0`
 - `model.backend`: `dummy` locally, `sam3` when the SAM3 dependency stack is installed
+- `model.checkpoint`: local checkpoint path such as `D:/repository/sam3-mask/sam3.pt`
 
 CLI overrides:
 
 ```powershell
 $env:PYTHONPATH = "src"
-python -m sam3_mask.main --config configs/default.yaml --labels face bird plant --save-cutout
+python -m sam3_mask.main --config configs/default.yaml --labels face plant
 ```
 
 ## Output
 
-The pipeline writes mirrored category directories and manifests:
+The pipeline writes label-scoped masks and crops plus manifests:
 
 ```text
 output/
-  LQ/<label>/
-  HR/<label>/
+  masks/<label>/<relative_dir>/<filename>.png
+  crops/<label>/hr_480/<relative_dir>/<filename>__r{row}_c{col}.png
+  crops/<label>/lq_240/<relative_dir>/<filename>__r{row}_c{col}.png
+  crops/<label>/mask_240/<relative_dir>/<filename>__r{row}_c{col}.png
   manifests/
     pairs.csv
     objects.jsonl
     summary.json
 ```
 
-File stems flatten source subdirectories:
+Notes:
 
-```text
-a/b/1.png + face -> a_b_1_face_01.png
-```
+- `manifests/summary.json` and `objects.jsonl` are rewritten on each run
+- shared output roots are safe for `masks/<label>` and `crops/<label>`, but manifests are not label-scoped
 
 ## Local Verification
 
 ```powershell
 $base = Join-Path $env:TEMP ('codex-pytest-' + [guid]::NewGuid().ToString())
-python -m pytest tests -v -p no:cacheprovider --basetemp=$base
+python -m pytest tests/test_pipeline_dummy.py -v -p no:cacheprovider --basetemp=$base
 ```
 
 Current expected result: all tests pass.
 
 ## SAM3 Backend
 
-The `sam3` backend intentionally fails with a clear message when the SAM3 package is not installed. After installing the target SAM3 dependency stack and checkpoint on Linux, run:
+After installing the SAM3 dependency stack and placing a local checkpoint, run stage 1 and stage 2 separately:
 
-```bash
-python -m sam3_mask.main --config configs/default.yaml --backend sam3 --device cuda:0 --checkpoint /path/to/checkpoint.pt
+```powershell
+python -m sam3_mask.main --config configs/SR_HR_.yaml
+python -m sam3_mask.main --config configs/SR_HR_crop.yaml
 ```
+
+## Example Configs
+
+The repository includes ready-to-run configs for the current dataset:
+
+- `configs/SR_HR_.yaml`: shared labels mask stage
+- `configs/SR_HR_crop.yaml`: shared labels crop stage
+- `configs/SR_HR_plant.yaml` / `configs/SR_HR_plant_crop.yaml`: plant-only output root
+- `configs/SR_HR_face_shared.yaml` / `configs/SR_HR_face_shared_crop.yaml`: face in shared output root
+- `configs/SR_HR_plant_shared.yaml` / `configs/SR_HR_plant_shared_crop.yaml`: plant in shared output root
+- `configs/SR_HR_architecture_shared.yaml` / `configs/SR_HR_architecture_shared_crop.yaml`: architecture in shared output root
 
 ## Notes
 
 - The package uses a `src/` layout.
-- Real CPU inference with SAM3 is expected to be slow; use `dummy` for local workflow checks.
-- Large-scale inference is intended for the later Linux/V100 environment.
+- `sam3.pt` is intentionally ignored by git.
+- Stage 2 reads masks from the configured output root; run stage 1 first.
+- Real CPU inference with SAM3 is expected to be slow; use GPU for practical runs.

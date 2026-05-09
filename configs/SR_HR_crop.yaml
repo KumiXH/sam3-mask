@@ -21,7 +21,7 @@ pairing:
   skip_scale_mismatch: true
 
 pipeline:
-  stage: mask
+  stage: crop
 
 crop:
   hr_crop_size: 480

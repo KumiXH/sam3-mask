@@ -4,14 +4,14 @@ input:
   exts: [".png", ".jpg", ".jpeg", ".webp"]
 
 output:
-  out_dir: D:/repository/sam3-mask/output/SR_HR
+  out_dir: D:/repository/sam3-mask/output/SR_HR_by_label
   save_crop: false
   save_cutout: false
   save_mask: false
   save_overlay: false
 
 prompts:
-  labels: [face, bird, plant, texture]
+  labels: [face]
   label_mode: single
   score_threshold: 0.25
 

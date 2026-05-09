@@ -8,3 +8,4 @@ data/
 *.egg-info/
 .venv/
 venv/
+sam3.pt

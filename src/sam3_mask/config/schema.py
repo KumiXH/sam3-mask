@@ -46,9 +46,21 @@ class ModelConfig:
 
 
 @dataclass(slots=True)
+class PipelineConfig:
+    stage: str = "mask"
+
+
+@dataclass(slots=True)
+class CropConfig:
+    hr_crop_size: int = 480
+
+
+@dataclass(slots=True)
 class AppConfig:
     input: InputConfig
     output: OutputConfig
     prompts: PromptsConfig
     pairing: PairingConfig = field(default_factory=PairingConfig)
     model: ModelConfig = field(default_factory=ModelConfig)
+    pipeline: PipelineConfig = field(default_factory=PipelineConfig)
+    crop: CropConfig = field(default_factory=CropConfig)

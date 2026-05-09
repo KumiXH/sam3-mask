@@ -8,11 +8,13 @@ import yaml
 
 from sam3_mask.config.schema import (
     AppConfig,
+    CropConfig,
     DEFAULT_EXTENSIONS,
     InputConfig,
     ModelConfig,
     OutputConfig,
     PairingConfig,
+    PipelineConfig,
     PromptsConfig,
 )
 
@@ -76,6 +78,12 @@ def load_config(path: Path, cli_overrides: dict[str, Any]) -> AppConfig:
     pairing_cfg = merged.get("pairing", {})
     if not isinstance(pairing_cfg, dict):
         raise TypeError("Config section 'pairing' must be a mapping.")
+    pipeline_cfg = merged.get("pipeline", {})
+    if not isinstance(pipeline_cfg, dict):
+        raise TypeError("Config section 'pipeline' must be a mapping.")
+    crop_cfg = merged.get("crop", {})
+    if not isinstance(crop_cfg, dict):
+        raise TypeError("Config section 'crop' must be a mapping.")
 
     labels = prompts_cfg.get("labels")
     if not isinstance(labels, list) or not labels:
@@ -83,6 +91,9 @@ def load_config(path: Path, cli_overrides: dict[str, Any]) -> AppConfig:
     label_mode = str(prompts_cfg.get("label_mode", "single"))
     if label_mode not in {"single", "multi"}:
         raise ValueError("Config field 'prompts.label_mode' must be one of: single, multi.")
+    stage = str(pipeline_cfg.get("stage", "mask"))
+    if stage not in {"mask", "crop"}:
+        raise ValueError("Config field 'pipeline.stage' must be one of: mask, crop.")
 
     return AppConfig(
         input=InputConfig(
@@ -118,4 +129,6 @@ def load_config(path: Path, cli_overrides: dict[str, Any]) -> AppConfig:
             checkpoint=str(model_cfg.get("checkpoint", "")),
             device=str(model_cfg.get("device", "cpu")),
         ),
+        pipeline=PipelineConfig(stage=stage),
+        crop=CropConfig(hr_crop_size=int(crop_cfg.get("hr_crop_size", 480))),
     )
