@@ -27,44 +27,91 @@ flowchart LR
 
 <table>
   <tr>
-    <th>LQ Input</th>
-    <th>HR Input</th>
+    <th>Sample</th>
+    <th>LQ Input<br /><sub>2048×1536</sub></th>
+    <th>Stage 1 Mask<br /><sub>2048×1536</sub></th>
+    <th>Stage 2 LQ Crop<br /><sub>240×240</sub></th>
+    <th>Stage 2 HR Crop<br /><sub>480×480</sub></th>
+    <th>Stage 2 Mask Crop<br /><sub>240×240</sub></th>
   </tr>
   <tr>
     <td align="center">
-      <img src="docs/examples/face_lq_input.jpg" width="320" alt="Face LQ input" /><br />
-      <sub>Actual size: 2048×1536</sub>
+      <code>0013</code>
     </td>
     <td align="center">
-      <img src="docs/examples/face_hr_input.jpg" width="320" alt="Face HR input" /><br />
-      <sub>Actual size: 4096×3072</sub>
+      <img src="docs/examples/face_0013_lq.jpg" width="120" alt="Face 0013 LQ input" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0013_mask.png" width="120" alt="Face 0013 stage 1 mask" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0013_lq_crop.png" width="120" alt="Face 0013 LQ crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0013_hr_crop.png" width="120" alt="Face 0013 HR crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0013_mask_crop.png" width="120" alt="Face 0013 mask crop" />
     </td>
   </tr>
-</table>
-
-<table>
   <tr>
-    <th>Stage 1 Face Mask</th>
-    <th>Stage 2 HR Crop</th>
-    <th>Stage 2 LQ Crop</th>
-    <th>Stage 2 Mask Crop</th>
+    <td align="center">
+      <code>0036</code>
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0036_lq.jpg" width="120" alt="Face 0036 LQ input" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0036_mask.png" width="120" alt="Face 0036 stage 1 mask" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0036_lq_crop.png" width="120" alt="Face 0036 LQ crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0036_hr_crop.png" width="120" alt="Face 0036 HR crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0036_mask_crop.png" width="120" alt="Face 0036 mask crop" />
+    </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="docs/examples/face_mask_stage1.png" width="220" alt="Face stage 1 mask" /><br />
-      <sub>Actual size: 2048×1536</sub>
+      <code>0041</code>
     </td>
     <td align="center">
-      <img src="docs/examples/face_hr_crop.png" width="220" alt="Face HR crop" /><br />
-      <sub>Actual size: 480×480</sub>
+      <img src="docs/examples/face_0041_lq.jpg" width="120" alt="Face 0041 LQ input" />
     </td>
     <td align="center">
-      <img src="docs/examples/face_lq_crop.png" width="220" alt="Face LQ crop" /><br />
-      <sub>Actual size: 240×240</sub>
+      <img src="docs/examples/face_0041_mask.png" width="120" alt="Face 0041 stage 1 mask" />
     </td>
     <td align="center">
-      <img src="docs/examples/face_mask_crop.png" width="220" alt="Face mask crop" /><br />
-      <sub>Actual size: 240×240</sub>
+      <img src="docs/examples/face_0041_lq_crop.png" width="120" alt="Face 0041 LQ crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0041_hr_crop.png" width="120" alt="Face 0041 HR crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0041_mask_crop.png" width="120" alt="Face 0041 mask crop" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <code>0060</code>
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0060_lq.jpg" width="120" alt="Face 0060 LQ input" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0060_mask.png" width="120" alt="Face 0060 stage 1 mask" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0060_lq_crop.png" width="120" alt="Face 0060 LQ crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0060_hr_crop.png" width="120" alt="Face 0060 HR crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_0060_mask_crop.png" width="120" alt="Face 0060 mask crop" />
     </td>
   </tr>
 </table>
@@ -73,44 +120,91 @@ flowchart LR
 
 <table>
   <tr>
-    <th>LQ Input</th>
-    <th>HR Input</th>
+    <th>Sample</th>
+    <th>LQ Input<br /><sub>2048×1536</sub></th>
+    <th>Stage 1 Mask<br /><sub>2048×1536</sub></th>
+    <th>Stage 2 LQ Crop<br /><sub>240×240</sub></th>
+    <th>Stage 2 HR Crop<br /><sub>480×480</sub></th>
+    <th>Stage 2 Mask Crop<br /><sub>240×240</sub></th>
   </tr>
   <tr>
     <td align="center">
-      <img src="docs/examples/plant_lq_input.jpg" width="320" alt="Plant LQ input" /><br />
-      <sub>Actual size: 2048×1536</sub>
+      <code>0000</code>
     </td>
     <td align="center">
-      <img src="docs/examples/plant_hr_input.jpg" width="320" alt="Plant HR input" /><br />
-      <sub>Actual size: 4096×3072</sub>
+      <img src="docs/examples/plant_0000_lq.jpg" width="120" alt="Plant 0000 LQ input" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0000_mask.png" width="120" alt="Plant 0000 stage 1 mask" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0000_lq_crop.png" width="120" alt="Plant 0000 LQ crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0000_hr_crop.png" width="120" alt="Plant 0000 HR crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0000_mask_crop.png" width="120" alt="Plant 0000 mask crop" />
     </td>
   </tr>
-</table>
-
-<table>
   <tr>
-    <th>Stage 1 Plant Mask</th>
-    <th>Stage 2 HR Crop</th>
-    <th>Stage 2 LQ Crop</th>
-    <th>Stage 2 Mask Crop</th>
+    <td align="center">
+      <code>0001</code>
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0001_lq.jpg" width="120" alt="Plant 0001 LQ input" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0001_mask.png" width="120" alt="Plant 0001 stage 1 mask" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0001_lq_crop.png" width="120" alt="Plant 0001 LQ crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0001_hr_crop.png" width="120" alt="Plant 0001 HR crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0001_mask_crop.png" width="120" alt="Plant 0001 mask crop" />
+    </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="docs/examples/plant_mask_stage1.png" width="220" alt="Plant stage 1 mask" /><br />
-      <sub>Actual size: 2048×1536</sub>
+      <code>0005</code>
     </td>
     <td align="center">
-      <img src="docs/examples/plant_hr_crop.png" width="220" alt="Plant HR crop" /><br />
-      <sub>Actual size: 480×480</sub>
+      <img src="docs/examples/plant_0005_lq.jpg" width="120" alt="Plant 0005 LQ input" />
     </td>
     <td align="center">
-      <img src="docs/examples/plant_lq_crop.png" width="220" alt="Plant LQ crop" /><br />
-      <sub>Actual size: 240×240</sub>
+      <img src="docs/examples/plant_0005_mask.png" width="120" alt="Plant 0005 stage 1 mask" />
     </td>
     <td align="center">
-      <img src="docs/examples/plant_mask_crop.png" width="220" alt="Plant mask crop" /><br />
-      <sub>Actual size: 240×240</sub>
+      <img src="docs/examples/plant_0005_lq_crop.png" width="120" alt="Plant 0005 LQ crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0005_hr_crop.png" width="120" alt="Plant 0005 HR crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0005_mask_crop.png" width="120" alt="Plant 0005 mask crop" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <code>0008</code>
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0008_lq.jpg" width="120" alt="Plant 0008 LQ input" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0008_mask.png" width="120" alt="Plant 0008 stage 1 mask" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0008_lq_crop.png" width="120" alt="Plant 0008 LQ crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0008_hr_crop.png" width="120" alt="Plant 0008 HR crop" />
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_0008_mask_crop.png" width="120" alt="Plant 0008 mask crop" />
     </td>
   </tr>
 </table>
