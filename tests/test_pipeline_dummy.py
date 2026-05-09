@@ -1,3 +1,4 @@
+import builtins
 from pathlib import Path
 
 import pytest
@@ -229,6 +230,70 @@ def test_run_pipeline_continues_after_unreadable_image(tmp_path: Path) -> None:
     assert (tmp_path / "out" / "manifests" / "summary.json").exists()
 
 
-def test_sam3_backend_raises_clear_error_when_dependency_missing() -> None:
+def test_sam3_backend_raises_clear_error_when_dependency_missing(monkeypatch: pytest.MonkeyPatch) -> None:
+    original_import = builtins.__import__
+
+    def fake_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if name == "sam3.model_builder" or name == "sam3.model.sam3_image_processor":
+            raise ImportError("simulated missing dependency")
+        return original_import(name, globals, locals, fromlist, level)
+
+    monkeypatch.setattr(builtins, "__import__", fake_import)
+
     with pytest.raises(RuntimeError, match="SAM3 backend is not available"):
         SAM3Backend.from_config(device="cpu", checkpoint="missing.pt")
+
+
+class FakeSam3Processor:
+    def set_image(self, image):
+        return {"image_size": image.size}
+
+    def set_text_prompt(self, *, state, prompt):
+        assert state["image_size"] == (10, 8)
+        assert prompt == "face"
+        state["boxes"] = [[1.2, 2.1, 7.9, 6.8]]
+        state["scores"] = [0.95]
+        state["masks"] = [[[False] * 10 for _ in range(8)]]
+        state["masks"][0][2][1] = True
+        state["masks"][0][6][7] = True
+        return state
+
+
+def test_sam3_backend_adapts_official_image_processor_state() -> None:
+    backend = SAM3Backend(FakeSam3Processor())
+    image = Image.new("RGB", (10, 8), "white")
+
+    results = backend.segment(image=image, labels=["face"], boxes=None, score_threshold=0.2)
+
+    assert len(results) == 1
+    assert results[0].label == "face"
+    assert results[0].score == 0.95
+    assert results[0].bbox == (1, 2, 6, 4)
+    assert results[0].mask.shape == (8, 10)
+    assert results[0].mask.dtype == bool
+
+
+class FakeSam3ProcessorWithChannelMask:
+    def set_image(self, image):
+        return {"image_size": image.size}
+
+    def set_text_prompt(self, *, state, prompt):
+        assert state["image_size"] == (10, 8)
+        assert prompt == "face"
+        state["boxes"] = [[1, 2, 8, 7]]
+        state["scores"] = [0.95]
+        state["masks"] = [[[[False] * 10 for _ in range(8)]]]
+        state["masks"][0][0][2][1] = True
+        state["masks"][0][0][6][7] = True
+        return state
+
+
+def test_sam3_backend_squeezes_single_channel_masks_from_official_processor() -> None:
+    backend = SAM3Backend(FakeSam3ProcessorWithChannelMask())
+    image = Image.new("RGB", (10, 8), "white")
+
+    results = backend.segment(image=image, labels=["face"], boxes=None, score_threshold=0.2)
+
+    assert len(results) == 1
+    assert results[0].mask.shape == (8, 10)
+    assert results[0].mask.dtype == bool

@@ -1,0 +1,27 @@
+input:
+  lq_dir: C:/Users/kumi/Desktop/SR_HR_IMG/LR
+  hr_dir: C:/Users/kumi/Desktop/SR_HR_IMG/HR
+  exts: [".png", ".jpg", ".jpeg", ".webp"]
+
+output:
+  out_dir: D:/repository/sam3-mask/output/SR_HR
+  save_crop: true
+  save_cutout: false
+  save_mask: false
+  save_overlay: false
+
+prompts:
+  labels: [face, bird, plant, texture]
+  label_mode: single
+  score_threshold: 0.25
+
+pairing:
+  expected_scale: 2.0
+  scale_tolerance: 0.05
+  skip_scale_mismatch: true
+
+model:
+  backend: sam3
+  proposal_provider: none
+  checkpoint: D:/repository/sam3-mask/sam3.pt
+  device: cuda:0
