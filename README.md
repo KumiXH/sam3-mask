@@ -25,23 +25,95 @@ flowchart LR
 
 ### Face Example
 
-| LQ Input | HR Input |
-|---|---|
-| ![](docs/examples/face_lq_input.jpg) | ![](docs/examples/face_hr_input.jpg) |
+<table>
+  <tr>
+    <th>LQ Input</th>
+    <th>HR Input</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="docs/examples/face_lq_input.jpg" width="320" alt="Face LQ input" /><br />
+      <sub>Actual size: 2048×1536</sub>
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_hr_input.jpg" width="320" alt="Face HR input" /><br />
+      <sub>Actual size: 4096×3072</sub>
+    </td>
+  </tr>
+</table>
 
-| Stage 1 Face Mask | Stage 2 HR Crop | Stage 2 LQ Crop | Stage 2 Mask Crop |
-|---|---|---|---|
-| ![](docs/examples/face_mask_stage1.png) | ![](docs/examples/face_hr_crop.png) | ![](docs/examples/face_lq_crop.png) | ![](docs/examples/face_mask_crop.png) |
+<table>
+  <tr>
+    <th>Stage 1 Face Mask</th>
+    <th>Stage 2 HR Crop</th>
+    <th>Stage 2 LQ Crop</th>
+    <th>Stage 2 Mask Crop</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="docs/examples/face_mask_stage1.png" width="220" alt="Face stage 1 mask" /><br />
+      <sub>Actual size: 2048×1536</sub>
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_hr_crop.png" width="220" alt="Face HR crop" /><br />
+      <sub>Actual size: 480×480</sub>
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_lq_crop.png" width="220" alt="Face LQ crop" /><br />
+      <sub>Actual size: 240×240</sub>
+    </td>
+    <td align="center">
+      <img src="docs/examples/face_mask_crop.png" width="220" alt="Face mask crop" /><br />
+      <sub>Actual size: 240×240</sub>
+    </td>
+  </tr>
+</table>
 
 ### Plant Example
 
-| LQ Input | HR Input |
-|---|---|
-| ![](docs/examples/plant_lq_input.jpg) | ![](docs/examples/plant_hr_input.jpg) |
+<table>
+  <tr>
+    <th>LQ Input</th>
+    <th>HR Input</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="docs/examples/plant_lq_input.jpg" width="320" alt="Plant LQ input" /><br />
+      <sub>Actual size: 2048×1536</sub>
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_hr_input.jpg" width="320" alt="Plant HR input" /><br />
+      <sub>Actual size: 4096×3072</sub>
+    </td>
+  </tr>
+</table>
 
-| Stage 1 Plant Mask | Stage 2 HR Crop | Stage 2 LQ Crop | Stage 2 Mask Crop |
-|---|---|---|---|
-| ![](docs/examples/plant_mask_stage1.png) | ![](docs/examples/plant_hr_crop.png) | ![](docs/examples/plant_lq_crop.png) | ![](docs/examples/plant_mask_crop.png) |
+<table>
+  <tr>
+    <th>Stage 1 Plant Mask</th>
+    <th>Stage 2 HR Crop</th>
+    <th>Stage 2 LQ Crop</th>
+    <th>Stage 2 Mask Crop</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="docs/examples/plant_mask_stage1.png" width="220" alt="Plant stage 1 mask" /><br />
+      <sub>Actual size: 2048×1536</sub>
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_hr_crop.png" width="220" alt="Plant HR crop" /><br />
+      <sub>Actual size: 480×480</sub>
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_lq_crop.png" width="220" alt="Plant LQ crop" /><br />
+      <sub>Actual size: 240×240</sub>
+    </td>
+    <td align="center">
+      <img src="docs/examples/plant_mask_crop.png" width="220" alt="Plant mask crop" /><br />
+      <sub>Actual size: 240×240</sub>
+    </td>
+  </tr>
+</table>
 
 ## Why Two Stages
 
